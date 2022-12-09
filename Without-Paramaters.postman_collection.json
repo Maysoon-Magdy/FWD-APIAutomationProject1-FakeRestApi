@@ -1,0 +1,200 @@
+{
+	"info": {
+		"_postman_id": "7c85bbf4-51fd-463c-90a8-b72efa262e28",
+		"name": "Without-Paramaters",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24753616"
+	},
+	"item": [
+		{
+			"name": "GetAuthors",
+			"item": [
+				{
+					"name": "New Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//The following Tests are mapped in the NotePad with ID 1 ",
+									"//Test 1-1 : Status code shall be 200 Ok ",
+									"pm.test(\"Status code shall be 200 Ok \", function () {",
+									"    pm.response.to.have.status(200);",
+									"}); ",
+									"",
+									"//Test 1-2: Response shall contain the right properties",
+									"pm.test(\"Response shall contain the right properties\" , function(){",
+									"   var response =  pm.response.json()[0];",
+									"   console.log(Object.keys(response));",
+									"   pm.expect(response).to.have.property('id'); ",
+									"   pm.expect(response).to.have.property('idBook')",
+									"   pm.expect(response).to.have.property('firstName')",
+									"   pm.expect(response).to.have.property('lastName');     ",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/{{VersionNumber}}/Authors",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"{{VersionNumber}}",
+								"Authors"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AddAuthor",
+			"item": [
+				{
+					"name": "ValidAuthorData",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//The following Tests are mapped in the NotePad with ID 2",
+									"//Test 2-1 : Status code shall be 201 in case of valid request",
+									"pm.test(\"Status code shall be 201 in case of valid request\", function () {",
+									"    pm.response.to.have.status(201);  ",
+									"});",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 3,\n  \"idBook\": 3,\n  \"firstName\": \"Maysoon\",\n  \"lastName\": \"Maysoon\"\n} ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/{{VersionNumber}}/Authors",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"{{VersionNumber}}",
+								"Authors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InvalidAuthorData",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//The following Tests are mapped in the NotePad with ID 2",
+									"//Test 2-2 : Status code shall be 400 in case of invalid request",
+									"// api body has nullble first and last name so the only unnullable field is bookid which i will send the bosy with",
+									"pm.test(\"Status code shall be 400 in case of invalid request\", function(){",
+									"    pm.response.to.have.status(400);",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "\n {\n    \"id\": 0,\n    \"idBook\": null ,\n    \"firstName\" : \"nFirst\",\n    \"lastName\" : \"nLast\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/{{VersionNumber}}/Authors",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"{{VersionNumber}}",
+								"Authors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InvalidAuthorData-requiredField",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//The following Tests are mapped in the NotePad with ID 2",
+									"//Test 2-3 : First and Last names should be required",
+									"pm.test(\"First and Last names should be required\",function(){",
+									"pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "file",
+							"file": {}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/{{VersionNumber}}/Authors",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"{{VersionNumber}}",
+								"Authors"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

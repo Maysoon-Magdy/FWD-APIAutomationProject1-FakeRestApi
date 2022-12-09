@@ -1,0 +1,105 @@
+API Automation Project - Part 1 
+Testing Swagger + Postman for "http://fakerestapi.azurewebsites.net/index.html"
+
+Test Cases: 
+API : GET || ​/api​/v1​/Authors
+Test 1-1 : Status code shall be 200 Ok 
+Expected : status code 200 OK 
+Actual : status code 200 OK 
+Status : pass
+*******************************************
+Test 1-2: Response shall contain the right properties
+Expected :response contains "id", "idBook" , "firstName" ,"LastName"
+Actual : response contains "id", "idBook" , "firstName" ,"LastName"
+Status : pass
+**************************************************************************************
+API : POST|| ​/api​/v1​/Authors
+Test 2-1 : Status code shall be 201 in case of valid request
+Expected : status code 201 Created after posting new user 
+Actual : status code is 200 not 201 and the author isn't created 
+Status : fail
+*******************************************
+Test 2-2 : Status code shall be 400 in case of invalid request
+Expected : status code 400 BadRequest after posting invalid user
+Actual : status code 400 BadRequest after posting invalid user
+Status : pass 
+*******************************************
+Test 2-3 : First and Last names should be required
+Expected : if any of them is missed 400 shall be returned 
+Actual :  status code 200 returned 
+Status : fail
+**************************************************************************************
+API : GET || /api/v1/Authors/authors/books/{idBook}
+Test 3-1 : Status code shall be 200 in case of valid book id 
+Expected : 200 
+Actual : 200
+Status :pass
+*******************************************
+Test 3-2: Book id shall be accepting only number 
+Expected : status 400 when passing id as character 
+Actual :  status 400 when passing id as character 
+Status : pass
+*******************************************
+Test 3-3 : Response Body shall contains only the sent book id 
+Expected : objects with the sent idBook only shall be returned 
+Actual : objects with the sent idBook only returned 
+Status :pass
+*******************************************
+Test 3-4 : status code in case of non-exist book id 
+Expected : status 400 when passing non-exist book id 
+Actual : status 400 returns 
+Status : pass
+**************************************************************************************
+API : GET || /api/v1/Authors/{id}
+Test 4-1 : Status code shall be 200 in case of valid author id 
+Expected : status code 200
+Actual : status code 200
+Status :pass
+*******************************************
+Test 4-2: author id shall be accepting only number 
+Expected : status 400 when passing id as character 
+Actual : status 400 when passing id as character 
+Status :pass
+*******************************************
+Test 4-3: Response Body shall contains only the sent author id 
+Expected : requested author only shall return
+Actual : requested author only returned
+Status :pass
+*******************************************
+Test 4-4 : status code 400 in case of non-exist author Id 
+Expected :status 400 when passing non-exist author id 
+Actual : status 400 returns 
+Status : pass
+**************************************************************************************
+API : PUT || /api/v1/Authors/{id}
+Test 5-1 : Status code in case of valid author id 
+Expected : 200 Ok
+Actual : 200 Ok
+Status : pass
+*******************************************
+Test 5-2 : Status code 400 in case of invalid author  id 
+Expected : status 400 when passing non-exist author id 
+Actual : status 400 when passing non-exist author id 
+Status : pass
+*******************************************
+Test 5-2 : Author data is updated correctly 
+Expected : Author data shall be updated with new body data 
+Actual : Assertion error as data doesn't updated 
+Status : fail
+**************************************************************************************
+API : DELETE || /api/v1/Authors/{id}
+Test 6-1 : status code 200 in case of valid author id 
+Expected : 200 ok 
+Actual : 200 ok 
+Status : pass
+*******************************************
+Test 6-2 : status code 400 in case of invalid author id 
+Expected : 400 Bad Request
+Actual : 400 Bad Request
+Status : pass
+*******************************************
+Test 6-3: author is deleted from author lists 
+Expected : status code 400 when getting the deleted author 
+Actual : status code 200 and author isn'y deleted 
+Status : fail
+**************************************************************************************

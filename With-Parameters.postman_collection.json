@@ -1,0 +1,585 @@
+{
+	"info": {
+		"_postman_id": "e760a845-774f-4119-aa65-5b8e9e326a5f",
+		"name": "With-Parameters",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24753616"
+	},
+	"item": [
+		{
+			"name": "GetAuthourByBookId",
+			"item": [
+				{
+					"name": "ValidBookId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//The following Tests are mapped in the NotePad with ID 3",
+									"//Test 3-1 : Status code shall be 200 in case of valid book id ",
+									"pm.test(\"Status code shall be 200 in case of valid book id \",function(){",
+									"  pm.response.to.have.status(200);",
+									"});",
+									"",
+									"//Test 3-3 : Response Body shall contains only the sent book id ",
+									" pm.test(\"Response Body shall contains only the sent book id\",function(){",
+									"  var length = Object.keys(pm.response.json()).length;",
+									"  let response = pm.response.json();",
+									"  for(let i = 0; i < length ; i++){",
+									"      pm.expect(response[i].idBook).to.equal(pm.collectionVariables.get(\"Book-Id\"));",
+									"  }",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"Book-Id\", 1);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{BaseURL}}/{{VersionNumber}}/Authors/authors/books/{{Book-Id}}",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"{{VersionNumber}}",
+								"Authors",
+								"authors",
+								"books",
+								"{{Book-Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InValidBookId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//The following Tests are mapped in the NotePad with ID 3",
+									"//Test 3-2: Book id shall be accepting only number ",
+									"pm.test(\"Book id shall be accepting only number\", function () {",
+									"pm.response.to.have.status(400);",
+									"});",
+									"",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"Book-Id\", \"d\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/{{VersionNumber}}/Authors/authors/books/{{Book-Id}}",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"{{VersionNumber}}",
+								"Authors",
+								"authors",
+								"books",
+								"{{Book-Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Non-ExistBookId",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"Book-Id\", 2929299292943443);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//The following Tests are mapped in the NotePad with ID 3",
+									"//Test 3-4 : status code in case of non-exist book id ",
+									"pm.test(\"status code in case of non-exist book id\", function () {",
+									"pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/{{VersionNumber}}/Authors/authors/books/{{Book-Id}}",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"{{VersionNumber}}",
+								"Authors",
+								"authors",
+								"books",
+								"{{Book-Id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "GetAuthourById",
+			"item": [
+				{
+					"name": "ValidAuthorId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//The following Tests are mapped in the NotePad with ID 4",
+									"//Test 4-1 : Status code shall be 200 in case of valid author id ",
+									"pm.test(\"Status code shall be 200 in case of valid author id \", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"//Test 4-3: Response Body shall contains only the sent author id ",
+									"pm.test(\"Response Body shall contains only the sent author id\",function(){",
+									"  let response = pm.response.json();",
+									"      pm.expect(response.id).to.equal(pm.collectionVariables.get(\"Author-Id\"));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"Author-Id\", 1);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/{{VersionNumber}}/Authors/{{Author-Id}}",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"{{VersionNumber}}",
+								"Authors",
+								"{{Author-Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InvalidAuthorId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//The following Tests are mapped in the NotePad with ID 4",
+									"//Test 4-2: author id shall be accepting only number ",
+									"pm.test(\"Author id shall be accepting only number\", function () {",
+									"pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"Author-Id\", \"M\");",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/{{VersionNumber}}/Authors/{{Author-Id}}",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"{{VersionNumber}}",
+								"Authors",
+								"{{Author-Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Non-ExistAuthorId",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//The following Tests are mapped in the NotePad with ID 4",
+									"//Test 4-4 : status code in case of non-exist author Id ",
+									"pm.test(\"Status code in case of non-exist author Id\",function(){",
+									"    pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"Author-Id\", 738232864738697832);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/{{VersionNumber}}/Authors/{{Author-Id}}",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"{{VersionNumber}}",
+								"Authors",
+								"{{Author-Id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UpdateAuthorById",
+			"item": [
+				{
+					"name": "ValidUpdates",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//The following Tests are mapped in the NotePad with ID 5",
+									"//Test 5-1 : Status code in case of valid author id ",
+									"pm.test(\"Status code in case of valid author id\",function(){",
+									"   pm.request.id = pm.collectionVariables.get(\"Author-Id\");",
+									"   pm.response.to.have.status(200);",
+									"});",
+									"//Test 5-2 : Author data is updated correctly ",
+									"    let id = pm.collectionVariables.get(\"Author-Id\");",
+									"    let baseURL = pm.globals.get(\"BaseURL\");",
+									"    let envVersion = pm.globals.get(\"VersionNumber\");",
+									"    pm.sendRequest(\"\"+baseURL+\"/\"+envVersion+\"/Authors/\"+id+\"\", function (err, response) {",
+									"      pm.test(\"Author data is updated correctly\",function(){",
+									"      let expectedResponse = pm.response.json();;",
+									"      actualResponse = response.json();",
+									"      pm.expect(expectedResponse.id).to.be.equal(actualResponse.id);",
+									"      pm.expect(expectedResponse.idBook).to.be.equal(actualResponse.idBook);",
+									"      pm.expect(expectedResponse.firstName).to.be.equal(actualResponse.firstName);",
+									"      pm.expect(expectedResponse.lastName).to.be.equal(actualResponse.lastName);",
+									"    });",
+									"    });",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"Author-Id\",1);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 1,\n  \"idBook\": 0,\n  \"firstName\": \"Updated\",\n  \"lastName\": \"Updated\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/{{VersionNumber}}/Authors/{{Author-Id}}",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"{{VersionNumber}}",
+								"Authors",
+								"{{Author-Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "InvalidUpdates",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//The following Tests are mapped in the NotePad with ID 5",
+									"//Test 5-2 : Status code in case of invalid author  id ",
+									"pm.test(\"Status code in case of Invalid author id\",function(){",
+									"   pm.request.id = pm.collectionVariables.get(\"Author-Id\");",
+									"   pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"id\": 35763637673,\n  \"idBook\": 0,\n  \"firstName\": \"Updated\",\n  \"lastName\": \"Updated\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/{{VersionNumber}}/Authors/{{Author-Id}}",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"{{VersionNumber}}",
+								"Authors",
+								"{{Author-Id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DeleteAuthorById",
+			"item": [
+				{
+					"name": "DeleteValidUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//The following Tests are mapped in the NotePad with ID 6",
+									"//Test 6-1 : status code in case of valid author id ",
+									"pm.test(\"Status code in case of valid author id \",function(){",
+									"pm.response.to.have.status(200);",
+									"",
+									"});",
+									"",
+									"//Test 6-3: Author is deleted from author lists",
+									"    let id = pm.collectionVariables.get(\"Author-Id\");",
+									"    let baseURL = pm.globals.get(\"BaseURL\");",
+									"    let envVersion = pm.globals.get(\"VersionNumber\");",
+									"    pm.sendRequest(\"\"+baseURL+\"/\"+envVersion+\"/Authors/\"+id+\"\", function (err, response) {",
+									"    pm.test(\"Author is deleted from author lists\",function(){",
+									"          pm.response.to.have.status(400);",
+									"          });",
+									"    });",
+									"    ",
+									"",
+									"",
+									"",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"Author-Id\",1);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BaseURL}}/{{VersionNumber}}/Authors/{{Author-Id}}",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"{{VersionNumber}}",
+								"Authors",
+								"{{Author-Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteInvalidUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"//The following Tests are mapped in the NotePad with ID 6",
+									"//Test 6-2 : Status code in case of invalid author id ",
+									"pm.test(\"Status code in case of invalid author id \",function(){",
+									"  pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set(\"Author-Id\",5467865678);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BaseURL}}/{{VersionNumber}}/Authors/{{Author-Id}}",
+							"host": [
+								"{{BaseURL}}"
+							],
+							"path": [
+								"{{VersionNumber}}",
+								"Authors",
+								"{{Author-Id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "Book-Id",
+			"value": ""
+		},
+		{
+			"key": "Author-Id",
+			"value": "1"
+		},
+		{
+			"key": "Authot-Id",
+			"value": ""
+		}
+	]
+}
