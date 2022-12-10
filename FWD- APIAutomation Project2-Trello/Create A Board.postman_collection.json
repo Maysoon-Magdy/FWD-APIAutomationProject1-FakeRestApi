@@ -1,0 +1,363 @@
+{
+	"info": {
+		"_postman_id": "12439813-0efc-406a-95f6-8ee911feee12",
+		"name": "Create A Board",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24753616"
+	},
+	"item": [
+		{
+			"name": "CreateNewBoard",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//3- Write test cases on Postman to verify the most important parameters and confirm its default values like closed is false.",
+							"pm.test(\"validate response parameters values \", function(){",
+							"   var response = pm.response.json();",
+							"   pm.expect(response.closed).to.be.false;",
+							"   pm.expect(response.prefs.permissionLevel).to.equal(\"private\");",
+							"   pm.expect(response.prefs.canBePublic).to.be.true;",
+							"   pm.expect(response.prefs.canInvite).to.be.true;",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "createdBoard1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{BaseUrl}}/1/boards/?name={name}&key={{APIKey}}&token={{APIToken}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"1",
+						"boards",
+						""
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "{name}"
+						},
+						{
+							"key": "key",
+							"value": "{{APIKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{APIToken}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetBoards",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							" //5- Write a test case to verify that number of boards in the response is above 1.",
+							" pm.test(\"number of boards in the response is above 1\",function(){",
+							"    pm.expect(pm.response.json().boards.length).to.be.greaterThan(1);",
+							" });",
+							"",
+							"",
+							"//6-Create Variables (as you wish Global or Environment) to get the following values.",
+							"let boardsNum = pm.response.json().boards.length;",
+							"let firstBoardId = pm.response.json().boards[0].id",
+							"let lastBoardId = pm.response.json().boards[boardsNum-1].id;",
+							"pm.globals.set(\"FirstBoardID\", firstBoardId);",
+							"pm.globals.set(\"LastBoardID\", lastBoardId);",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}/1/members/me?boards=open&key={{APIKey}}&token={{APIToken}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"1",
+						"members",
+						"me"
+					],
+					"query": [
+						{
+							"key": "boards",
+							"value": "open"
+						},
+						{
+							"key": "key",
+							"value": "{{APIKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{APIToken}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteBoard",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//8- Write test cases to verify:",
+							"//8-1The status code is 200.",
+							"//8-2Response Body should contain a meaningful message like \"board is removed successfully\".",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Body contains meaningful message\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"board is removed successfully\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}/1/boards/{{LastBoardID}}?key={{APIKey}}&token={{APIToken}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"1",
+						"boards",
+						"{{LastBoardID}}"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{APIKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{APIToken}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateList",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//10-1 Verify the following keys exist in the response regardless of what the value is (just confirm the key, not the value)",
+							"pm.test(\"Verify response keys\",function(){",
+							"    pm.expect(pm.response.json()).to.have.property('id');",
+							"    pm.expect(pm.response.json()).to.have.property('name');",
+							"    pm.expect(pm.response.json()).to.have.property('idBoard');",
+							"});",
+							"",
+							"",
+							"//10-2 Verify the most important parameters and confirm their default values like:",
+							"pm.test(\"Verify the most important parameters values\" , function(){",
+							"      pm.expect(pm.response.json().closed).to.be.false;",
+							"      pm.expect(pm.response.json().limits).to.be.empty;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}/1/lists?name=myList&idBoard={{FirstBoardID}}&key={{APIKey}}&token={{APIToken}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"1",
+						"lists"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "myList"
+						},
+						{
+							"key": "idBoard",
+							"value": "{{FirstBoardID}}"
+						},
+						{
+							"key": "key",
+							"value": "{{APIKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{APIToken}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetListsOnboard",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//12- Write a test case to verify that the number of lists in the response is 3 [default lists are To Do, Doing, Done].",
+							"",
+							"",
+							"//Note(some boards created by 0 lists and i am making all dynamic so i will use greater than not equal as i am creating new lists in the same board using add list API)",
+							"pm.test(\"verify that number of lists in the board are 3\",function(){",
+							"    pm.expect(pm.response.json().length).to.be.greaterThan(3);",
+							"});",
+							"",
+							"",
+							"//13- Create Variables (as you wish Global or Environment) to get the following values.",
+							"    let ListsNum = pm.response.json().length;",
+							"    let firstListId = pm.response.json()[0].id",
+							"    let lastListId = pm.response.json()[ListsNum-1].id;",
+							"    pm.globals.set(\"FirstListID\", firstListId);",
+							"    pm.globals.set(\"LastListID\", lastListId);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}/1/boards/{{FirstBoardID}}/lists?key={{APIKey}}&token={{APIToken}}",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"1",
+						"boards",
+						"{{FirstBoardID}}",
+						"lists"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{APIKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{APIToken}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Archive or un-archive a list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"//Write test cases to verify:",
+							"//15-1 Status code is 200.",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//15-2 In Response Body, \"closed\" is true if the value=true (in the query parameter) and vice versa.",
+							"pm.test(\"Validate value paramater logic\", function () {",
+							"    if (pm.request.url.query.toObject().value == true) {",
+							"        pm.expect(pm.response.json().closed).to.be.true;",
+							"",
+							"    } else if (pm.request.url.query.toObject().value == false) {",
+							"        pm.expect(pm.response.json().closed).to.be.false;",
+							"    }",
+							"});",
+							"",
+							"//15-3 Response Headers include a key called \"Set-Cookie\" and its value contains the text \"isEnterpriseAdmin%3Dfalse\".",
+							"pm.test(\"Set-Cookie is present in response header\", function () {",
+							"      pm.response.to.have.header(\"Set-Cookie\");",
+							"      pm.response.to.be.header(\"Set-Cookie\",\"isEnterpriseAdmin%3Dfalse\");",
+							"",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{BaseUrl}}/1/lists/{{FirstListID}}/closed?key={{APIKey}}&token={{APIToken}}&value=false",
+					"host": [
+						"{{BaseUrl}}"
+					],
+					"path": [
+						"1",
+						"lists",
+						"{{FirstListID}}",
+						"closed"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "{{APIKey}}"
+						},
+						{
+							"key": "token",
+							"value": "{{APIToken}}"
+						},
+						{
+							"key": "value",
+							"value": "false",
+							"description": "value=true  => means Archive  , value=false      means => un-archive."
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
